@@ -12,17 +12,21 @@ public class Juego {
     Dado da;
     Jugador yo;
     Jugador yo2;
-    private int turno;
+    private int turno = 2;
 
     public Juego() {
-        da = new Dado();
+        this(new Dado());
+    }
+
+    public Juego(Dado dado) {
+        da = java.util.Objects.requireNonNull(dado);
         yo = new Jugador();
         yo2 = new Jugador();
     }
 
 
     public void setTurno(int turnos) {
-        turnos=2;
+        if (turnos != 1 && turnos != 2) throw new IllegalArgumentException("El turno debe ser 1 o 2.");
         this.turno = turnos;
     }
 
@@ -54,58 +58,12 @@ public class Juego {
     }
 
     public String turno() {
-        if(this.turno==0){
-            this.setTurno(turno);
-        }
-        this.cambiaTurno();
-     
-            if (this.turno == 1) {
-                int dado = da.generaAleatorio();
-                switch (dado) {
-                    case 1:
-                        yo.setPosicion(dado);
-                        break;
-                    case 2:
-                        yo.setPosicion(dado);
-                        break;
-                    case 3:
-                        return "No se puede mover por sacar " + dado;
-                    case 4:
-                        return "No se puede mover por sacar " + dado;
-                    case 5:
-                        return "No se puede mover por sacar " + dado;
-                    case 6:
-                        return "No se puede mover por sacar " + dado;
-                    default:
-                        return "No se puede mover por sacar " + dado;
-                }
-
-            }
-            
-            if (this.turno == 2) {
-                int dado = da.generaAleatorio();
-                switch (dado) {
-                    case 1:
-                        yo2.setPosicion(dado);
-                        break;
-                    case 2:
-                        yo2.setPosicion(dado);
-                        break;
-                    case 3:
-                        return "No se puede mover por sacar " + dado;
-                    case 4:
-                        return "No se puede mover por sacar " + dado;
-                    case 5:
-                        return "No se puede mover por sacar " + dado;
-                    case 6:
-                        return "No se puede mover por sacar " + dado;
-                    default:
-                        return "No se puede mover por sacar " + dado;
-                }
-
-            }
-      
-            
-            return "Jugador uno "+ yo.toString1()+" Jugador 2 "+ yo2.toString1();
+        cambiaTurno();
+        Jugador jugador = turno == 1 ? yo : yo2;
+        int dado = da.generaAleatorio();
+        if (dado == 1 || dado == 2) jugador.setPosicion(dado);
+        String movimiento = dado <= 2 ? "Avanza " + dado : "No se puede mover por sacar " + dado;
+        return "Turno de " + jugador.getNombreJugador() + ": " + movimiento
+            + "\n" + yo.toString1() + "\n" + yo2.toString1();
     }
 }

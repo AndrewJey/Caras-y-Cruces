@@ -1,0 +1,9 @@
+[
+  {
+    "project": "CarasCruces/build.xml",
+    "source": "checks/DiceCheck.java",
+    "main": "DiceCheck",
+    "headless": true,
+    "classpath": []
+  }
+]
